@@ -1,5 +1,7 @@
 package dev.skylyrics;
 
+import com.mojang.brigadier.arguments.DoubleArgumentType;
+import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.fabricmc.api.ClientModInitializer;
@@ -66,6 +68,22 @@ public class SkyLyricsMod implements ClientModInitializer {
                                     cfg.offsetMs = IntegerArgumentType.getInteger(c, "ms");
                                     cfg.save();
                                     c.getSource().sendFeedback(Component.literal("Offset set to " + cfg.offsetMs + " ms"));
+                                    return 1;
+                                })))
+                        .then(ClientCommands.literal("distance")
+                                .then(ClientCommands.argument("blocks", DoubleArgumentType.doubleArg(2, 60)).executes(c -> {
+                                    Config cfg = Config.get();
+                                    cfg.panelDistance = DoubleArgumentType.getDouble(c, "blocks");
+                                    cfg.save();
+                                    c.getSource().sendFeedback(Component.literal("Distance set to " + cfg.panelDistance + " blocks"));
+                                    return 1;
+                                })))
+                        .then(ClientCommands.literal("height")
+                                .then(ClientCommands.argument("degrees", FloatArgumentType.floatArg(-30, 60)).executes(c -> {
+                                    Config cfg = Config.get();
+                                    cfg.panelUpDeg = FloatArgumentType.getFloat(c, "degrees");
+                                    cfg.save();
+                                    c.getSource().sendFeedback(Component.literal("Height set to " + cfg.panelUpDeg + " degrees above crosshair"));
                                     return 1;
                                 })))
                         .then(ClientCommands.literal("status").executes(c -> {

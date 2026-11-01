@@ -15,8 +15,10 @@ public class Config {
     public int port = 8888;          // must match the redirect URI in your Spotify app
     public int offsetMs = 0;         // + = lyrics appear later, - = earlier
     public boolean enabled = true;
-    public double distance = 40;     // blocks in front of you
-    public double height = 18;       // blocks above you
+
+    public double panelDistance = 7; // how many blocks in front of you the lyrics float
+    public float panelUpDeg = 12;    // how many degrees above your crosshair
+    public float followDeg = 10;     // how far you can turn before the lyrics start following
 
     private static Path path() {
         return FabricLoader.getInstance().getConfigDir().resolve("skylyrics.json");
